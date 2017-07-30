@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import br.com.caelum.livraria.exception.LivrariaException;
 import br.com.caelum.livraria.modelo.Autor;
 
 @Stateless//isso virou um EJB
@@ -27,8 +28,13 @@ public class AutorDao {
 	}
 	
 	@TransactionAttribute(TransactionAttributeType.MANDATORY)
-	public void salva(Autor autor) {
+	public void salva(Autor autor) throws LivrariaException {
 		entityManager.persist(autor);
+		//Exceptions do tipo unchecked sao tratadas como algo grave,
+		//unchecked causa rollback, portanto, n salva no DB.
+		//Exceptions do tipo Checked sao tratadas como algo previsto,
+		//n causam rollback, portanto, salva no DB.
+		//throw new LivrariaException();
 	}
 	
 	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)

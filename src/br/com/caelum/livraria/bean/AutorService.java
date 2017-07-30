@@ -10,6 +10,7 @@ import javax.ejb.TransactionManagementType;
 import javax.inject.Inject;
 
 import br.com.caelum.livraria.dao.AutorDao;
+import br.com.caelum.livraria.exception.LivrariaException;
 import br.com.caelum.livraria.modelo.Autor;
 
 @Stateless
@@ -19,10 +20,10 @@ public class AutorService {
 	@Inject
 	private AutorDao autorDao;
 
-	//REQUIRED, como eh padrao, ao ser solicitado
-	//sera aberta uma nova transacao
+	// REQUIRED, como eh padrao, ao ser solicitado
+	// sera aberta uma nova transacao
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public void adicionaAutor(Autor autor) {
+	public void adicionaAutor(Autor autor) throws LivrariaException {
 		// aki poderia conter as regras de negócio
 		autorDao.salva(autor);
 	}
